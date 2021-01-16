@@ -2,6 +2,9 @@
 // Jordan Michalak
 // s449340
 
+//Działanie algorytmu: znajdz największą liczbę i zamień ją z sąsiadem na którego patrzy kierunek < 
+
+
 const btn1 = document.querySelector('button:nth-of-type(1)');
 const btn2 = document.querySelector('button:nth-of-type(2)');
 const dataIn = document.querySelector('#number');
@@ -13,12 +16,15 @@ const toLeft = 0;
 let resultBuffor = [];
 
 // Obliczanie silni
-const fact = (n) => { 
-    let res = 1; 
-    for (let i = 1; i <= n; i++) 
-        res = res * i; 
-    return res; 
-} 
+const factorialize = (num) => {
+    if (num < 0) 
+          return -1;
+    else if (num == 0) 
+        return 1;
+    else {
+        return (num * factorialize(num - 1));
+    }
+  }
 
 const showPermutation = (n) => { 
     let a = [n]; 
@@ -27,7 +33,7 @@ const showPermutation = (n) => {
     //Wypisanie pierwszej permutacji
     for (let i = 0; i < n; i++) { 
         a[i] = i + 1; 
-        resultBuffor[i] = a[i]; 
+        resultBuffor[i] = a[i];    // 1,2,3,4
     }
 
     resultBuffor.push(' ');
@@ -36,8 +42,8 @@ const showPermutation = (n) => {
         dir[i] =  toLeft; 
   
     //Generowanie pojedyńczych permutacji n! razy      
-    for (let i = 1; i < fact(n); i++) 
-        showSinglePermutation(a, dir, n);
+    for (let i = 1; i < factorialize(n); i++) 
+        showSinglePermutation(a, dir, n);    
 
     result.innerHTML = `${resultBuffor}`;
 } 
@@ -46,14 +52,14 @@ const showPermutation = (n) => {
 const showSinglePermutation = (a, dir, n) => {
 
     let max = getMaxNumber(a, dir, n);  // -> 4 
-    let maxPos = findMaxPos(a, n, max); // -> 5
+    let maxPos = findMaxPos(a, n, max); // -> 4
   
     //Jeżeli kierunek jest na LEWO zamiana dwóch sąsiadów a b -> b a
     if (dir[a[maxPos - 1] - 1] ==  toLeft){
         let b; 
-        b = a[maxPos-2]; // -> 2
-        a[maxPos-2] = a[maxPos-1]; // 2 = 3
-        a[maxPos-1] = b;   // 3 = 2
+        b = a[maxPos-2]; // -> 3
+        a[maxPos-2] = a[maxPos-1]; // 3 = 4
+        a[maxPos-1] = b;   // 4 = 3
     }
    
     //Jezeli kierunek jest ustawiony na PRAWO
@@ -83,7 +89,7 @@ const showSinglePermutation = (a, dir, n) => {
 
 // Szukanie największej liczby
 const getMaxNumber = (a, dir, n) => {
-    let maxPrev = 0, max = 0; 
+    let max = 0; 
     for (let i = 0; i < n; i++) {
         //Jżeli poprzedni kierunek ustawiony jest na LEWO  to jeżeli aktualna licba jest większa od poprzedniej to teraz ta liczba jest największa 
         if (dir[a[i]-1] == toLeft && i!=0) { 
@@ -98,9 +104,9 @@ const getMaxNumber = (a, dir, n) => {
                 max = a[i]; 
             } 
         } 
-    } 
-  
-    if (max == 0 && maxPrev == 0) 
+    }
+     
+    if (max == 0) 
         return 0; 
     else
         return max; 
@@ -130,4 +136,5 @@ btn1.addEventListener('click', function(){
 btn2.addEventListener('click', function(){
     location.reload();
 })
+    
     

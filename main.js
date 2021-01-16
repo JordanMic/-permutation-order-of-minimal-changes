@@ -12,23 +12,23 @@ const toRight = 1;
 const toLeft = 0; 
 let resultBuffor = [];
 
-const factorialize = (num) => {
-    if (num < 0) 
+const factorialize = (n) => {
+    if (n < 0) 
           return -1;
-    else if (num == 0) 
+    else if (n == 0) 
         return 1;
     else {
-        return (num * factorialize(num - 1));
+        return (n * factorialize(n - 1));
     }
   }
 
 const showPermutation = (n) => { 
-    let a = [n]; 
+    let num = [n]; 
     let dir = [n]; 
     
     for (let i = 0; i < n; i++) { 
-        a[i] = i + 1; 
-        resultBuffor[i] = a[i];   
+        num[i] = i + 1; 
+        resultBuffor[i] = num[i];   
     }
 
     resultBuffor.push(' ');
@@ -37,61 +37,60 @@ const showPermutation = (n) => {
         dir[i] =  toLeft; 
       
     for (let i = 1; i < factorialize(n); i++) 
-        showSinglePermutation(a, dir, n);    
+        showSinglePermutation(num, dir, n);    
 
     result.innerHTML = `${resultBuffor}`;
 } 
 
 
-const showSinglePermutation = (a, dir, n) => {
+const showSinglePermutation = (num, dir, n) => {
 
-    let max = getMaxNumber(a, dir, n);  // -> 4 
-    let maxPos = findMaxPos(a, n, max); // -> 4
+    let max = getMaxNumber(num, dir, n);  
+    let maxPos = findMaxPos(num, n, max); 
   
-    if (dir[a[maxPos - 1] - 1] ==  toLeft){
+    if (dir[num[maxPos - 1] - 1] ==  toLeft){
         let b; 
-        b = a[maxPos-2]; 
-        a[maxPos-2] = a[maxPos-1]; 
-        a[maxPos-1] = b; 
+        b = num[maxPos-2]; 
+        num[maxPos-2] = num[maxPos-1]; 
+        num[maxPos-1] = b; 
     }
    
-    else if (dir[a[maxPos - 1] - 1] == toRight){
+    else if (dir[num[maxPos - 1] - 1] == toRight){
         let b; 
-        a[maxPos], a[maxPos-1]; 
-        b = a[maxPos-1];  
-        a[maxPos-1] = a[maxPos]; 
-        a[maxPos] = b;  
+        num[maxPos], num[maxPos-1]; 
+        b = num[maxPos-1];  
+        num[maxPos-1] = num[maxPos]; 
+        num[maxPos] = b;  
     }
   
     for (let i = 0; i < n; i++) { 
-        if (a[i] > max) {
-            if (dir[a[i] - 1] == toRight) 
-                dir[a[i] - 1] = toLeft; 
-            else if (dir[a[i] - 1] == toLeft) 
-                dir[a[i] - 1] = toRight; 
+        if (num[i] > max) {
+            if (dir[num[i] - 1] == toRight) 
+                dir[num[i] - 1] = toLeft; 
+            else if (dir[num[i] - 1] == toLeft) 
+                dir[num[i] - 1] = toRight; 
         } 
     } 
 
     for (let i = 0; i < n; i++){
-        resultBuffor.push(a[i]);
+        resultBuffor.push(num[i]);
     }
-    resultBuffor.push(` `);
-
+    resultBuffor.push(` `);num
 } 
 
 
-const getMaxNumber = (a, dir, n) => {
+const getMaxNumber = (num, dir, n) => {
     let max = 0; 
     for (let i = 0; i < n; i++) {
-        if (dir[a[i]-1] == toLeft && i!=0) { 
-            if (a[i] > a[i-1] && a[i] > max) { 
-                max = a[i]; 
+        if (dir[num[i]-1] == toLeft && i!=0) { 
+            if (num[i] > num[i-1] && num[i] > max) { 
+                max = num[i]; 
             } 
         } 
         
-        if (dir[a[i]-1] == toRight && i!=n-1) { 
-            if (a[i] > a[i+1] && a[i] > max) { 
-                max = a[i]; 
+        if (dir[num[i]-1] == toRight && i!=n-1) { 
+            if (num[i] > num[i+1] && num[i] > max) { 
+                max = num[i]; 
             } 
         } 
     }
@@ -102,9 +101,9 @@ const getMaxNumber = (a, dir, n) => {
         return max; 
 } 
 
-const findMaxPos = (a,  n, max) => { 
+const findMaxPos = (num,  n, max) => { 
     for (let i = 0; i < n; i++) 
-        if (a[i] == max) 
+        if (num[i] == max) 
            return i + 1; 
 } 
   

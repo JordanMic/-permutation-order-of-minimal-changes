@@ -35,7 +35,7 @@ const showPermutation = (n) => {
 
     for (let i = 0; i < n; i++) 
         dir[i] =  toLeft; 
-      
+    num
     for (let i = 1; i < factorialize(n); i++) 
         showSinglePermutation(num, dir, n);    
 
@@ -75,7 +75,8 @@ const showSinglePermutation = (num, dir, n) => {
     for (let i = 0; i < n; i++){
         resultBuffor.push(num[i]);
     }
-    resultBuffor.push(` `);num
+    resultBuffor.push(` `);
+
 } 
 
 
